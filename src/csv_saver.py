@@ -1,6 +1,7 @@
 import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
 
-class CSVSaver:
+class CSVSaver(BaseEstimator, TransformerMixin):
     def __init__(self, output_path="./predictions.csv"):
         self.output_path = output_path
 
