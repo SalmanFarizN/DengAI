@@ -16,7 +16,6 @@ class LoadData:
         """
         self.data_path = data_path
         self.labels_path = labels_path
-        return None
 
     def load(self):
         """Load data from the specified CSV file and return separate dataframes for San Juan and Iquitos.
