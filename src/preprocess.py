@@ -32,6 +32,6 @@ class Preprocess(BaseEstimator, TransformerMixin):
         X_clean = X[features].copy()
 
         # Fill missing values
-        X_clean.fillna(method="ffill", inplace=True)
+        X_clean = X_clean.ffill()
 
         return X_clean
