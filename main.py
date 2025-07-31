@@ -3,6 +3,7 @@ from src.csv_saver import CSVSaver
 from src.load_data import LoadData
 from src.preprocess import Preprocess
 from src.feature_selector import FeatureSelector
+from src.feature_augmentation import FeatureAugmentation
 from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
@@ -13,6 +14,7 @@ def create_pipeline():
     """Creates a 3 step pipline"""
     return Pipeline(
         [
+            ("featureaugmentation", FeatureAugmentation()),
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
             ("model", XGBRegressor(
@@ -45,14 +47,14 @@ def main():
     )
 
     # Load the train data
-    Sj, Iq, sj_labels, iq_labels = LoadData(data_path, labels_path).load()
+    Sj, Iq  = LoadData(data_path, labels_path).load()
     print(f"Data loaded: {len(Sj)} rows for San Juan, {len(Iq)} rows for Iquitos")
     # Extract y_train
-    y_train_sj = sj_labels["total_cases"]
-    y_train_iq = iq_labels["total_cases"]
+    y_train_sj = Sj["total_cases"]
+    y_train_iq = Iq["total_cases"]
 
     # Load the test data features
-    Sj_test, Iq_test, _, _ = LoadData(test_data_path).load()
+    Sj_test, Iq_test = LoadData(test_data_path).load()
 
     if any(x is None for x in [Sj, y_train_sj, Sj]):
         raise NotImplementedError("Data loading not implemented yet")
