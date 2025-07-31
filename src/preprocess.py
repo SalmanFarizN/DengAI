@@ -1,5 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
+import numpy as np
 
 
 class Preprocess(BaseEstimator, TransformerMixin):
@@ -29,11 +30,36 @@ class Preprocess(BaseEstimator, TransformerMixin):
         # Select features we want
         features = [
             "reanalysis_specific_humidity_g_per_kg",
+            "reanalysis_relative_humidity_percent",
+            "reanalysis_dew_point_temp_k",
+            "station_avg_temp_c",
+            "station_min_temp_c",
+            "weekofyear",
+            "ndvi_se",
+            "ndvi_sw",
+            "ndvi_ne",
+            "ndvi_nw",
+        ]
+        dataframe_clean = dataframe[features].copy()
+
+        # Add Sin and Cos of the weekofyear column
+        dataframe_clean["weekofyear_sin"] = (
+            2 * 3.14159 * dataframe_clean["weekofyear"] / 52
+        ).apply(lambda x: np.sin(x))
+        dataframe_clean["weekofyear_cos"] = (
+            2 * 3.14159 * dataframe_clean["weekofyear"] / 52
+        ).apply(lambda x: np.cos(x))
+
+        # Add lagged features t-1 for climate & weather related features
+        weather_features = [
+            "reanalysis_specific_humidity_g_per_kg",
+            "reanalysis_relative_humidity_percent",
             "reanalysis_dew_point_temp_k",
             "station_avg_temp_c",
             "station_min_temp_c",
         ]
-        dataframe_clean = dataframe[features].copy()
+        for feature in weather_features:
+            dataframe_clean[f"{feature}_t-1"] = dataframe_clean[feature].shift(1)
 
         # Print the name of columns in dataframe
         print(f"Columns after selection: {dataframe_clean.columns.tolist()}")
