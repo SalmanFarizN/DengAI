@@ -1,6 +1,4 @@
 from sklearn.base import BaseEstimator, TransformerMixin
-import pandas as pd
-
 class FeatureSelector(BaseEstimator, TransformerMixin):
     """Select specific features from a pandas DataFrame.
     This class implements the scikit-learn BaseEstimator and TransformerMixin interfaces.
@@ -46,4 +44,5 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         dataframe_selected = dataframe[self.features].copy()
         # Print the name of columns after selection
         print(f"Columns after selection: {dataframe_selected.columns.tolist()}")
+
         return dataframe_selected

@@ -1,5 +1,5 @@
+from pandas.conftest import datapath
 from sklearn.base import BaseEstimator, TransformerMixin
-import pandas as pd
 import numpy as np
 
 
@@ -84,4 +84,5 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
             print(f"Warning: Unknown augmentation type '{aug_type}'")
             return dataframe
         print(f"Created augmented feature: {feature_name}")
+
         return dataframe
