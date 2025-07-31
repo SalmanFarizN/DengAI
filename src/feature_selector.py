@@ -14,10 +14,17 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         """
         if features is None:
             features = [
-                "reanalysis_specific_humidity_g_per_kg",
-                "reanalysis_dew_point_temp_k",
-                "station_avg_temp_c",
-                "station_min_temp_c",
+                "reanalysis_specific_humidity_g_per_kg_shift_3",
+                "reanalysis_dew_point_temp_k_shift_3",
+                "station_max_temp_c_shift_3",
+                "station_min_temp_c_shift_3",
+                "station_avg_temp_c_shift_3",
+                "weekofyear_col_cosine",
+                "weekofyear_col_sine",
+                "reanalysis_air_temp_k_shift_3",
+                "reanalysis_avg_temp_k_shift_3",
+                "reanalysis_max_air_temp_k_shift_3",
+                "reanalysis_min_air_temp_k_shift_3"
             ]
         self.features = features
 
@@ -34,11 +41,9 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         """
         # Print the name of columns
         print(f"Columns in the dataframe: {dataframe.columns.tolist()}")
-
         # Select features we want
-        dataframe_selected = dataframe[self.features].copy()
 
+        dataframe_selected = dataframe[self.features].copy()
         # Print the name of columns after selection
         print(f"Columns after selection: {dataframe_selected.columns.tolist()}")
-
         return dataframe_selected
