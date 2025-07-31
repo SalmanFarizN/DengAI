@@ -13,14 +13,17 @@ def create_pipeline():
     return Pipeline(
         [
             ("preprocessing", Preprocess()),
-            ("model", XGBRegressor(
-                                    n_estimators=100,
-                                    max_depth=4,
-                                    learning_rate=0.05,
-                                    subsample=0.8,
-                                    colsample_bytree=0.8,
-                                    random_state=0,
-                                    )),
+            (
+                "model",
+                XGBRegressor(
+                    n_estimators=100,
+                    max_depth=8,
+                    learning_rate=0.05,
+                    subsample=0.8,
+                    colsample_bytree=0.8,
+                    random_state=0,
+                ),
+            ),
             # (
             #     "save",
             #     CSVSaver(),
