@@ -23,7 +23,7 @@ def create_pipeline():
             ("featureaugmentation", FeatureAugmentation()),
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
-            ("model", glm_estimator),
+            ("model", XGBRegressor()),
             # (
             #     "save",
             #     CSVSaver(),
