@@ -2,6 +2,7 @@ from sklearn.pipeline import Pipeline
 from src.csv_saver import CSVSaver
 from src.load_data import LoadData
 from src.preprocess import Preprocess
+from src.feature_selector import FeatureSelector
 from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
@@ -13,6 +14,7 @@ def create_pipeline():
     return Pipeline(
         [
             ("preprocessing", Preprocess()),
+            ("featureengineering", FeatureSelector()),
             ("model", XGBRegressor(
                                     n_estimators=100,
                                     max_depth=4,
