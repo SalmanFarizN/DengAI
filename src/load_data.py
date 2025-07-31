@@ -26,15 +26,23 @@ class LoadData:
         """
 
         # Load data and set index to city, year, weekofyear
-        df = pd.read_csv(self.data_path, index_col=[0, 1, 2])
+        df = pd.read_csv(self.data_path)
+        sj_labels = pd.DataFrame()
+        iq_labels = pd.DataFrame()
+
+        # Load the lables if provided
+        if self.labels_path is not None:
+            df_labels = pd.read_csv(self.labels_path)
+            sj_labels = df_labels[df_labels["city"] == "sj"]
+            iq_labels = df_labels[df_labels["city"] == "iq"]
 
         # Add labels to dataframe if labels path is provided
-        if self.labels_path:
-            labels = pd.read_csv(self.labels_path, index_col=[0, 1, 2])
-            df = df.join(labels)
-
+        # if self.labels_path:
+        #     labels = pd.read_csv(self.labels_path, index_col=[0, 1, 2])
+        #     df = df.join(labels)
         # Separate San Juan and Iquitos dataframes
-        sj = df.loc["sj"]
-        iq = df.loc["iq"]
 
-        return sj, iq
+        sj = df[df["city"] == "sj"]
+        iq = df[df["city"] == "iq"]
+
+        return sj, iq, sj_labels, iq_labels

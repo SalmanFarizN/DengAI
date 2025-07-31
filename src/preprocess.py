@@ -15,13 +15,17 @@ class Preprocess(BaseEstimator, TransformerMixin):
         # No fitting necessary, so we return self
         return self
 
-    def transform(self, X):
+    def transform(self, dataframe):
         """Clean the dataframe by filling missing values and selecting relevant features.
         Args:
-            X (pd.DataFrame): Input dataframe to be cleaned.
+            dataframe (pd.DataFrame): Input dataframe to be cleaned.
         Returns:
             pd.DataFrame: Cleaned dataframe.
         """
+
+        # Print the name of columns
+        print(f"Columns in the dataframe: {dataframe.columns.tolist()}")
+
         # Select features we want
         features = [
             "reanalysis_specific_humidity_g_per_kg",
@@ -29,9 +33,14 @@ class Preprocess(BaseEstimator, TransformerMixin):
             "station_avg_temp_c",
             "station_min_temp_c",
         ]
-        X_clean = X[features].copy()
+        dataframe_clean = dataframe[features].copy()
+
+        # Print the name of columns in dataframe
+        print(f"Columns after selection: {dataframe_clean.columns.tolist()}")
 
         # Fill missing values
-        X_clean = X_clean.ffill()
+        dataframe_clean = dataframe_clean.ffill()
 
-        return X_clean
+        X = dataframe_clean
+
+        return X
