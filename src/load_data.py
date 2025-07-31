@@ -26,23 +26,24 @@ class LoadData:
         """
 
         # Load data and set index to city, year, weekofyear
+        # NOTE: DATA CONTAINS ALL FEATURES
         df = pd.read_csv(self.data_path)
-        sj_labels = pd.DataFrame()
-        iq_labels = pd.DataFrame()
 
-        # Load the lables if provided
+        # copy index columns so we can use them later by column name
+        df['city_col'] = df['city']
+        df['year_col'] = df['year']
+        df['weekofyear_col'] = df['weekofyear']
+        df.set_index(['city', 'year', 'weekofyear'], inplace=True)
+
         if self.labels_path is not None:
+            # NOTE: LABELS contains total cases AND output columns needed for final csv
             df_labels = pd.read_csv(self.labels_path)
-            sj_labels = df_labels[df_labels["city"] == "sj"]
-            iq_labels = df_labels[df_labels["city"] == "iq"]
+            df_labels.set_index(['city', 'year', 'weekofyear'], inplace=True)
+            df = df.join(df_labels)
 
-        # Add labels to dataframe if labels path is provided
-        # if self.labels_path:
-        #     labels = pd.read_csv(self.labels_path, index_col=[0, 1, 2])
-        #     df = df.join(labels)
         # Separate San Juan and Iquitos dataframes
 
-        sj = df[df["city"] == "sj"]
-        iq = df[df["city"] == "iq"]
+        sj = df[df.index.get_level_values("city") == "sj"]
+        iq = df[df.index.get_level_values("city") == "iq"]
 
-        return sj, iq, sj_labels, iq_labels
+        return sj, iq
