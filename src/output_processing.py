@@ -18,7 +18,6 @@ class OutputCSV:
             self.output_file_path,
             index=False,
             header=True,
-            float_format="%.2f",
         )
 
         return self.output_file_path
