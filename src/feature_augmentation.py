@@ -20,19 +20,62 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         if augmentations is None:
             # Default augmentation for backward compatibility
             augmentations = [
-                # {'type': 'shift_log', 'column': 'total_cases', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 3 },
-                {'type': 'cosine', 'column': 'weekofyear_col', 'shift_periods': 0},
-                {'type': 'sine', 'column': 'weekofyear_col', 'shift_periods': 0},
-                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'reanalysis_max_air_temp_k', 'shift_periods': 3},
-                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 3}
-            ]
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 3},
+
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 3}
+                            ]
+
+
+
+
         self.augmentations = augmentations
 
     def fit(self, X=None, y=None):
@@ -72,7 +115,7 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         elif aug_type == 'shift':
             shift_periods = config.get('shift_periods', 1)
             shifted_values = dataframe[column].shift(shift_periods)
-            feature_name = f"{column}_shift_{shift_periods}"
+            feature_name = f"{column}_lag{shift_periods}"
             dataframe[feature_name] = shifted_values
         elif aug_type == 'cosine':
             feature_name = f"{column}_cosine"

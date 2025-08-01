@@ -17,14 +17,7 @@ def create_pipeline():
             ("featureaugmentation", FeatureAugmentation()),
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
-            ("model", XGBRegressor(
-                                    n_estimators=100,
-                                    max_depth=4,
-                                    learning_rate=0.05,
-                                    subsample=0.8,
-                                    colsample_bytree=0.8,
-                                    random_state=0,
-                                    )),
+            ("model", XGBRegressor()),
             # (
             #     "save",
             #     CSVSaver(),
@@ -67,11 +60,11 @@ def main():
     fit1 = pipeline.fit(Sj, y_train_sj)
     fit2 = pipeline.fit(Iq, y_train_iq)
 
-    predictions_csv_1 = fit1.predict(Sj_test)
-    predictions_csv_2 = fit2.predict(Iq_test)
+    predictions_csv_1 = fit1.predict(Sj_test).astype(int)
+    predictions_csv_2 = fit2.predict(Iq_test).astype(int)
 
-    Sj_test["total_cases"] = np.round(predictions_csv_1, 0).astype(int)
-    Iq_test["total_cases"] = np.round(predictions_csv_2, 0).astype(int)
+    Sj_test["total_cases"] = predictions_csv_1[0]
+    Iq_test["total_cases"] = predictions_csv_2[0]
 
     # Append the predictions to the test data
 

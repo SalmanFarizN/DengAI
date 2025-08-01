@@ -41,9 +41,9 @@ class LoadData:
             df_labels.set_index(['city', 'year', 'weekofyear'], inplace=True)
             df = df.join(df_labels)
 
+
         # Separate San Juan and Iquitos dataframes
 
         sj = df[df.index.get_level_values("city") == "sj"]
         iq = df[df.index.get_level_values("city") == "iq"]
-
         return sj, iq
