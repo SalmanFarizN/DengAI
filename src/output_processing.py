@@ -5,7 +5,7 @@ from datetime import datetime
 class OutputCSV:
     def __init__(self, pd1: pd.DataFrame, pd2: pd.DataFrame):
         self.current_time = datetime.now()
-        self.output_file_path = f"data/predictions/predictions_{self.current_time}.csv"
+        self.output_file_path = f"data/predictions/predictions_{self.current_time}.csv" #TODO: Dynamically add info from model type and features set to file name using Pipeline Context.
         self.pd1 = pd1
         self.pd2 = pd2
 
