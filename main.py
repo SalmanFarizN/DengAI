@@ -24,7 +24,7 @@ def create_pipeline():
             ("featureaugmentation", FeatureAugmentation()),
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
-            ("model", XGBRegressor(max_depth=4, objective='reg:tweedie')),
+            ("model", XGBRegressor()),
             # (
             #     "save",
             #     CSVSaver(),
