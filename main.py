@@ -20,12 +20,17 @@ def create_pipeline():
             (
                 "model",
                 XGBRegressor(
-                    n_estimators=100,
-                    max_depth=4,
-                    learning_rate=0.05,
-                    subsample=0.8,
-                    colsample_bytree=0.8,
-                    random_state=0,
+                    n_estimators=300,  # total trees
+                    learning_rate=0.05,  # how much each tree contributes (lower = slower but more stable)
+                    max_depth=4,  # controls complexity / prevents overfitting
+                    subsample=0.8,  # randomly use 80% of rows per tree (helps generalization)
+                    colsample_bytree=0.8,  # randomly use 80% of features per tree
+                    gamma=0,  # min loss reduction required to make a split (can tune later)
+                    reg_alpha=0.1,  # L1 regularization (feature selection)
+                    reg_lambda=1.0,  # L2 regularization (stability)
+                    random_state=42,  # reproducibility
+                    n_jobs=-1,  # use all CPU cores
+                    verbosity=1,
                 ),
             ),
             # (
