@@ -20,30 +20,77 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         if augmentations is None:
             # Default augmentation for backward compatibility
             augmentations = [
-                {"type": "shift", "column": "ndvi_ne", "shift_periods": 3},
-                {"type": "shift", "column": "ndvi_nw", "shift_periods": 3},
-                {"type": "shift", "column": "ndvi_se", "shift_periods": 3},
-                {"type": "shift", "column": "ndvi_sw", "shift_periods": 3},
-                {"type": "shift", "column": "precipitation_amt_mm", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_air_temp_k", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_avg_temp_k", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_dew_point_temp_k", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_max_air_temp_k", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_min_air_temp_k", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_precip_amt_kg_per_m2", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_relative_humidity_percent", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_sat_precip_amt_mm", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_specific_humidity_g_per_kg", "shift_periods": 3},
-                {"type": "shift", "column": "reanalysis_tdtr_k", "shift_periods": 3},
-                {"type": "shift", "column": "station_avg_temp_c", "shift_periods": 3},
-                {"type": "shift", "column": "station_diur_temp_rng_c", "shift_periods": 3},
-                {"type": "shift", "column": "station_max_temp_c", "shift_periods": 3},
-                {"type": "shift", "column": "station_min_temp_c", "shift_periods": 3},
-                {"type": "shift", "column": "station_precip_mm", "shift_periods": 3},
-                {"type": "shift", "column": "year_col", "shift_periods": 1},
-                {"type": "cosine", "column": "weekofyear_col", "shift_periods": 0},
-                {"type": "sine", "column": "weekofyear_col", "shift_periods": 0},
-            ]
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_specific_humidity_g_per_kg', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_dew_point_temp_k', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_min_air_temp_k', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'station_min_temp_c', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_relative_humidity_percent', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'station_avg_temp_c', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_precip_amt_kg_per_m2', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_air_temp_k', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 3},
+                                 {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 3},
+                                {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': 4},
+
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 1},
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 2},
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 3},
+                                 {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 4},
+
+                                {'type': 'cosine', 'column': 'weekofyear_col', 'shift_periods': 0},
+                                {'type': 'sine', 'column': 'weekofyear_col', 'shift_periods': 0},
+
+                                # {'type': 'temp_composite', 'column': 'station_avg_temp_c', 'shift_periods': 3},
+                                # {'type': 'saturation_composite', 'column': 'reanalysis_air_temp_k', 'shift_periods': 2}
+                            ]
 
         self.augmentations = augmentations
 
@@ -84,7 +131,7 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         elif aug_type == 'shift':
             shift_periods = config.get('shift_periods', 1)
             shifted_values = dataframe[column].shift(shift_periods)
-            feature_name = f"{column}_shift_{shift_periods}"
+            feature_name = f"{column}_lag{shift_periods}"
             dataframe[feature_name] = shifted_values
         elif aug_type == 'cosine':
             feature_name = f"{column}_cosine"
@@ -92,9 +139,24 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         elif aug_type == 'sine':
             feature_name = f"{column}_sine"
             dataframe[feature_name] = np.sin(2 * np.pi * dataframe["weekofyear_col"] / 52)
+        elif aug_type == 'temp_composite':
+            shift_periods = config.get('shift_periods', 1)
+            feature_name = f"{column}_temp_composite"
+            dataframe[feature_name] = dataframe.groupby(level=0)['station_avg_temp_c'].shift(shift_periods).transform(lambda x: (x - 27.5) / 27)
+        elif aug_type == 'saturation_composite':
+            shift_periods = config.get('shift_periods', 1)
+            feature_name = f"{column}_saturation_composite"
+
+            # Calculate lagged saturation deficit per group (level=0)
+            shifted_air_temp = dataframe.groupby(level=0)['reanalysis_air_temp_k'].shift(shift_periods)
+            shifted_dew_point = dataframe.groupby(level=0)['reanalysis_dew_point_temp_k'].shift(shift_periods)
+            dataframe[feature_name] = shifted_air_temp - shifted_dew_point
+
         else:
             print(f"Warning: Unknown augmentation type '{aug_type}'")
             return dataframe
         print(f"Created augmented feature: {feature_name}")
 
         return dataframe
+
+

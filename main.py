@@ -10,6 +10,7 @@ import numpy as np
 from xgboost import XGBRegressor
 from src.stats_model_wrapper import StatsModelWrapper
 import statsmodels.api as sm
+from datetime import datetime
 
 def create_pipeline():
     """Creates a 3 step pipline"""
@@ -48,29 +49,35 @@ def main():
     # Load the train data
     Sj, Iq  = LoadData(data_path, labels_path).load()
     print(f"Data loaded: {len(Sj)} rows for San Juan, {len(Iq)} rows for Iquitos")
+
     # Extract y_train
     y_train_sj = Sj["total_cases"]
     y_train_iq = Iq["total_cases"]
 
+
+
     # Load the test data features
     Sj_test, Iq_test = LoadData(test_data_path).load()
+
+
 
     if any(x is None for x in [Sj, y_train_sj, Sj]):
         raise NotImplementedError("Data loading not implemented yet")
 
-    pipeline = create_pipeline()
+    pipeline_1 = create_pipeline()
+    pipeline_2 = create_pipeline()
 
-    if any(step[1] is None for step in pipeline.steps):
-        raise NotImplementedError("Pipeline steps not implemented yet")
+    # if any(step[1] is None for step in pipeline.steps):
+    #     raise NotImplementedError("Pipeline steps not implemented yet")
 
-    fit1 = pipeline.fit(Sj, y_train_sj)
-    fit2 = pipeline.fit(Iq, y_train_iq)
+    fit1 = pipeline_1.fit(Sj, y_train_sj)
+    fit2 = pipeline_2.fit(Iq, y_train_iq)
 
     predictions_csv_1 = fit1.predict(Sj_test)
     predictions_csv_2 = fit2.predict(Iq_test)
 
-    Sj_test["total_cases"] = np.round(predictions_csv_1, 0).astype(int)
-    Iq_test["total_cases"] = np.round(predictions_csv_2, 0).astype(int)
+    Sj_test["total_cases"] = np.maximum(np.array(predictions_csv_1).astype(int), 0)
+    Iq_test["total_cases"] = np.maximum(np.array(predictions_csv_2).astype(int), 0)
 
     # Append the predictions to the test data
 
@@ -87,9 +94,11 @@ def main():
         [predictions_csv_1, predictions_csv_2], ignore_index=True
     )
 
+    current_time = datetime.now()
+
     # Save the predictions to a CSV file using pandas
     predictions_csv_1.to_csv(
-        "data/predictions.csv", index=False, header=True, float_format="%.2f"
+        f"data/predictions_{current_time}.csv", index=False, header=True, float_format="%.2f"
     )
 
     return predictions_csv_1
