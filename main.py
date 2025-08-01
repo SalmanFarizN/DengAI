@@ -1,9 +1,10 @@
 from sklearn.pipeline import Pipeline
-from src.csv_saver import CSVSaver
 from src.load_data import LoadData
 from src.preprocess import Preprocess
 from src.feature_selector import FeatureSelector
 from src.feature_augmentation import FeatureAugmentation
+from src.output_processing import OutputCSV
+
 # from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
@@ -12,12 +13,11 @@ from src.stats_model_wrapper import StatsModelWrapper
 import statsmodels.api as sm
 from datetime import datetime
 
+
 def create_pipeline():
     """Creates a 3 step pipline"""
 
-    glm_estimator = StatsModelWrapper(
-    family=sm.families.NegativeBinomial(alpha=1e-08)
-)
+    glm_estimator = StatsModelWrapper(family=sm.families.NegativeBinomial(alpha=1e-08))
 
     return Pipeline(
         [
@@ -25,10 +25,6 @@ def create_pipeline():
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
             ("model", XGBRegressor()),
-            # (
-            #     "save",
-            #     CSVSaver(),
-            # ),  # TODO: Update CSV saver it just return an empty csv now
         ]
     )
 
@@ -47,19 +43,15 @@ def main():
     )
 
     # Load the train data
-    Sj, Iq  = LoadData(data_path, labels_path).load()
+    Sj, Iq = LoadData(data_path, labels_path).load()
     print(f"Data loaded: {len(Sj)} rows for San Juan, {len(Iq)} rows for Iquitos")
 
     # Extract y_train
     y_train_sj = Sj["total_cases"]
     y_train_iq = Iq["total_cases"]
 
-
-
     # Load the test data features
     Sj_test, Iq_test = LoadData(test_data_path).load()
-
-
 
     if any(x is None for x in [Sj, y_train_sj, Sj]):
         raise NotImplementedError("Data loading not implemented yet")
@@ -89,17 +81,9 @@ def main():
         ["city", "year", "weekofyear", "total_cases"]
     ]
 
-    # Appemnd the predictions from both cities
-    predictions_csv_1 = pd.concat(
-        [predictions_csv_1, predictions_csv_2], ignore_index=True
-    )
-
-    current_time = datetime.now()
-
-    # Save the predictions to a CSV file using pandas
-    predictions_csv_1.to_csv(
-        f"data/predictions_{current_time}.csv", index=False, header=True, float_format="%.2f"
-    )
+    # Save the predictions to a CSV file in 'data/predictions/' directory
+    csvfile = OutputCSV(predictions_csv_1, predictions_csv_2)
+    csvfile.save()
 
     return predictions_csv_1
 
