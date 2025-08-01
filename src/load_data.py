@@ -46,4 +46,5 @@ class LoadData:
 
         sj = df[df.index.get_level_values("city") == "sj"]
         iq = df[df.index.get_level_values("city") == "iq"]
+
         return sj, iq
