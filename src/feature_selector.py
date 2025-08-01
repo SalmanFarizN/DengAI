@@ -1,6 +1,4 @@
 from sklearn.base import BaseEstimator, TransformerMixin
-import pandas as pd
-
 class FeatureSelector(BaseEstimator, TransformerMixin):
     """Select specific features from a pandas DataFrame.
     This class implements the scikit-learn BaseEstimator and TransformerMixin interfaces.
@@ -13,6 +11,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             features (list): List of column names to select. If None, will use default features.
         """
         if features is None:
+
                 features = [
                     "reanalysis_specific_humidity_g_per_kg",
                     "reanalysis_dew_point_temp_k",
@@ -27,7 +26,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                     "station_max_temp_c",
                     "station_precip_mm",
                     "ndvi_sw",
-                    "weekofyear_col",
+                    # "weekofyear_col",
 
                     "reanalysis_specific_humidity_g_per_kg_lag1",
                     "reanalysis_specific_humidity_g_per_kg_lag2",
@@ -79,7 +78,10 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
                     "ndvi_sw_lag1",
                     "ndvi_sw_lag2",
-                    "ndvi_sw_lag3"
+                    "ndvi_sw_lag3",
+
+                    "weekofyear_col_cosine",
+                    "weekofyear_col_sine"
                 ]
 
         self.features = features

@@ -1,5 +1,5 @@
+from pandas.conftest import datapath
 from sklearn.base import BaseEstimator, TransformerMixin
-import pandas as pd
 import numpy as np
 
 
@@ -70,11 +70,11 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
                                 {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 1},
                                 {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 2},
-                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 3}
+                                {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': 3},
+
+                                {'type': 'cosine', 'column': 'weekofyear_col', 'shift_periods': 0},
+                                {'type': 'sine', 'column': 'weekofyear_col', 'shift_periods': 0}
                             ]
-
-
-
 
         self.augmentations = augmentations
 
@@ -127,4 +127,5 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
             print(f"Warning: Unknown augmentation type '{aug_type}'")
             return dataframe
         print(f"Created augmented feature: {feature_name}")
+
         return dataframe
