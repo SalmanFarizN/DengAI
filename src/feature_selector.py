@@ -26,63 +26,82 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                     "station_max_temp_c",
                     "station_precip_mm",
                     "ndvi_sw",
-                    # "weekofyear_col",
+                    "weekofyear_col",
 
                     "reanalysis_specific_humidity_g_per_kg_lag1",
                     "reanalysis_specific_humidity_g_per_kg_lag2",
                     "reanalysis_specific_humidity_g_per_kg_lag3",
+                    "reanalysis_specific_humidity_g_per_kg_lag4",
 
                     "reanalysis_dew_point_temp_k_lag1",
                     "reanalysis_dew_point_temp_k_lag2",
                     "reanalysis_dew_point_temp_k_lag3",
+                    "reanalysis_dew_point_temp_k_lag4",
 
                     "reanalysis_min_air_temp_k_lag1",
                     "reanalysis_min_air_temp_k_lag2",
                     "reanalysis_min_air_temp_k_lag3",
+                    "reanalysis_min_air_temp_k_lag4",
 
                     "station_min_temp_c_lag1",
                     "station_min_temp_c_lag2",
                     "station_min_temp_c_lag3",
+                    "station_min_temp_c_lag4",
+
 
                     "reanalysis_relative_humidity_percent_lag1",
                     "reanalysis_relative_humidity_percent_lag2",
                     "reanalysis_relative_humidity_percent_lag3",
+                    "reanalysis_relative_humidity_percent_lag4",
 
                     "station_avg_temp_c_lag1",
                     "station_avg_temp_c_lag2",
                     "station_avg_temp_c_lag3",
+                    "station_avg_temp_c_lag4",
 
                     "reanalysis_precip_amt_kg_per_m2_lag1",
                     "reanalysis_precip_amt_kg_per_m2_lag2",
                     "reanalysis_precip_amt_kg_per_m2_lag3",
+                    "reanalysis_precip_amt_kg_per_m2_lag4",
 
                     "reanalysis_air_temp_k_lag1",
                     "reanalysis_air_temp_k_lag2",
                     "reanalysis_air_temp_k_lag3",
+                    "reanalysis_air_temp_k_lag4",
 
                     "reanalysis_sat_precip_amt_mm_lag1",
                     "reanalysis_sat_precip_amt_mm_lag2",
                     "reanalysis_sat_precip_amt_mm_lag3",
+                    "reanalysis_sat_precip_amt_mm_lag4",
 
                     "reanalysis_avg_temp_k_lag1",
                     "reanalysis_avg_temp_k_lag2",
                     "reanalysis_avg_temp_k_lag3",
+                    "reanalysis_avg_temp_k_lag4",
 
                     "station_max_temp_c_lag1",
                     "station_max_temp_c_lag2",
                     "station_max_temp_c_lag3",
+                    "station_max_temp_c_lag4",
 
                     "station_precip_mm_lag1",
                     "station_precip_mm_lag2",
                     "station_precip_mm_lag3",
+                    "station_precip_mm_lag4",
 
                     "ndvi_sw_lag1",
                     "ndvi_sw_lag2",
                     "ndvi_sw_lag3",
+                    "ndvi_sw_lag4",
 
                     "weekofyear_col_cosine",
-                    "weekofyear_col_sine"
+                    "weekofyear_col_sine",
+
+                    # "station_avg_temp_c_temp_composite",
+
+                    # "reanalysis_air_temp_k_saturation_composite"
                 ]
+
 
         self.features = features
 
@@ -104,4 +123,5 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         dataframe_selected = dataframe[self.features].copy()
         # Print the name of columns after selection
         print(f"Columns after selection: {dataframe_selected.columns.tolist()}")
+
         return dataframe_selected
