@@ -4,27 +4,26 @@ from src.load_data import LoadData
 from src.preprocess import Preprocess
 from src.feature_selector import FeatureSelector
 from src.feature_augmentation import FeatureAugmentation
-from sklearn.ensemble import RandomForestRegressor
+# from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
-
+from src.stats_model_wrapper import StatsModelWrapper
+import statsmodels.api as sm
 
 def create_pipeline():
     """Creates a 3 step pipline"""
+
+    glm_estimator = StatsModelWrapper(
+    family=sm.families.NegativeBinomial(alpha=1e-08)
+)
+
     return Pipeline(
         [
             ("featureaugmentation", FeatureAugmentation()),
             ("preprocessing", Preprocess()),
             ("featureengineering", FeatureSelector()),
-            ("model", XGBRegressor(
-                                    n_estimators=100,
-                                    max_depth=4,
-                                    learning_rate=0.05,
-                                    subsample=0.8,
-                                    colsample_bytree=0.8,
-                                    random_state=0,
-                                    )),
+            ("model", XGBRegressor()),
             # (
             #     "save",
             #     CSVSaver(),
