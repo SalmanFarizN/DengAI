@@ -63,7 +63,7 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
                                 {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 1},
                                 {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 2},
                                 {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 3},
-                                 {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 4},
+                                {'type': 'shift', 'column': 'reanalysis_sat_precip_amt_mm', 'shift_periods': 4},
 
                                 {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 1},
                                 {'type': 'shift', 'column': 'reanalysis_avg_temp_k', 'shift_periods': 2},

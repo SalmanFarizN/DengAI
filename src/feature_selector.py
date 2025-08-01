@@ -48,7 +48,6 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                     "station_min_temp_c_lag3",
                     "station_min_temp_c_lag4",
 
-
                     "reanalysis_relative_humidity_percent_lag1",
                     "reanalysis_relative_humidity_percent_lag2",
                     "reanalysis_relative_humidity_percent_lag3",
