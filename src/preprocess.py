@@ -25,7 +25,6 @@ class Preprocess(BaseEstimator, TransformerMixin):
         # Fill missing values
 
 
-        X = dataframe.ffill()
-
+        X = dataframe.bfill()
         return X
 
