@@ -33,9 +33,11 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
                                 {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': [1,2,3,4]},
                                 {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': [1,2,3,4]},
                                 {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': [1,2,3,4]},
+
                                 {'type': 'cosine', 'column': 'weekofyear_col', 'shift_periods': 0},
                                 {'type': 'sine', 'column': 'weekofyear_col', 'shift_periods': 0},
 
+                                # NOTE: We tried these composite features but they had little impact
                                 # {'type': 'temp_composite', 'column': 'station_avg_temp_c', 'shift_periods': 3},
                                 # {'type': 'saturation_composite', 'column': 'reanalysis_air_temp_k', 'shift_periods': 2}
                             ]
@@ -71,6 +73,7 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
             return dataframe
 
         if aug_type == 'shift_log':
+            # We have a plan to do a log transform on the y value. Was harder than expected so this is currently not used. TOD: Clean up?
             shift_periods = config.get('shift_periods', 1)
             shifted_values = dataframe[column].shift(shift_periods)
             log_shifted_values = np.log(shifted_values + 1e-8)

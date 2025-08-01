@@ -13,6 +13,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         if features is None:
 
                 features = [
+                    # Main Feature Set
                     "reanalysis_specific_humidity_g_per_kg",
                     "reanalysis_dew_point_temp_k",
                     "reanalysis_min_air_temp_k",
@@ -28,6 +29,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                     "ndvi_sw",
                     "weekofyear_col",
 
+                    # Below we Lag all our main features to deal with delayed total cases and there effect on weather.
                     "reanalysis_specific_humidity_g_per_kg_lag1",
                     "reanalysis_specific_humidity_g_per_kg_lag2",
                     "reanalysis_specific_humidity_g_per_kg_lag3",
@@ -93,6 +95,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
                     "ndvi_sw_lag3",
                     "ndvi_sw_lag4",
 
+                    # Here we use cosine and sine of weekofyear against year to better adjust for seasonal changes.
                     "weekofyear_col_cosine",
                     "weekofyear_col_sine",
 

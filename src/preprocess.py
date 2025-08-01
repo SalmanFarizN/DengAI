@@ -23,8 +23,6 @@ class Preprocess(BaseEstimator, TransformerMixin):
         """
 
         # Fill missing values
-
-
-        X = dataframe.bfill()
+        X = dataframe.bfill() # Backfill used here for Nans in raw data but also deals with lagged data's missing values.
         return X
 

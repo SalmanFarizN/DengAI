@@ -1,15 +1,15 @@
 from sklearn.pipeline import Pipeline
-from src.load_data import LoadData
-from src.preprocess import Preprocess
-from src.feature_selector import FeatureSelector
-from src.feature_augmentation import FeatureAugmentation
-from src.output_processing import OutputCSV
+from load_data import LoadData
+from preprocess import Preprocess
+from feature_selector import FeatureSelector
+from feature_augmentation import FeatureAugmentation
+from output_processing import OutputCSV
 
 # from sklearn.ensemble import RandomForestRegressor
 import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
-from src.stats_model_wrapper import StatsModelWrapper
+from stats_model_wrapper import StatsModelWrapper
 import statsmodels.api as sm
 from datetime import datetime
 
@@ -27,7 +27,6 @@ def create_pipeline():
             ("model", XGBRegressor()),
         ]
     )
-
 
 def main():
     print("main() called...")
@@ -68,6 +67,8 @@ def main():
     predictions_csv_1 = fit1.predict(Sj_test)
     predictions_csv_2 = fit2.predict(Iq_test)
 
+
+    #TODO : Move this into a new class/method for post processing that we can add to the pipleine.
     Sj_test["total_cases"] = np.maximum(np.array(predictions_csv_1).astype(int), 0)
     Iq_test["total_cases"] = np.maximum(np.array(predictions_csv_2).astype(int), 0)
 
