@@ -33,10 +33,12 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
                                 {'type': 'shift', 'column': 'station_max_temp_c', 'shift_periods': [1,2,3,4]},
                                 {'type': 'shift', 'column': 'station_precip_mm', 'shift_periods': [1,2,3,4]},
                                 {'type': 'shift', 'column': 'ndvi_sw', 'shift_periods': [1,2,3,4]},
+
                                 {'type': 'cosine', 'column': 'weekofyear_col', 'shift_periods': 0},
                                 {'type': 'sine', 'column': 'weekofyear_col', 'shift_periods': 0},
 
-                                # {'type': 'temp_composite', 'column': 'station_avg_temp_c', 'shift_periods': 3}, # We tried these composite features but they had little impact.
+                                # NOTE: We tried these composite features but they had little impact
+                                # {'type': 'temp_composite', 'column': 'station_avg_temp_c', 'shift_periods': 3},
                                 # {'type': 'saturation_composite', 'column': 'reanalysis_air_temp_k', 'shift_periods': 2}
                             ]
 

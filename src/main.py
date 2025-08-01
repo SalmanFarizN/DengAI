@@ -67,6 +67,8 @@ def main():
     predictions_csv_1 = fit1.predict(Sj_test)
     predictions_csv_2 = fit2.predict(Iq_test)
 
+
+    #TODO : Move this into a new class/method for post processing that we can add to the pipleine.
     Sj_test["total_cases"] = np.maximum(np.array(predictions_csv_1).astype(int), 0)
     Iq_test["total_cases"] = np.maximum(np.array(predictions_csv_2).astype(int), 0)
 
