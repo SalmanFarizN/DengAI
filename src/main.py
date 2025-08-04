@@ -15,7 +15,7 @@ from datetime import datetime
 
 
 def create_pipeline():
-    """Creates a 3 step pipline"""
+    """Creates a 4 step pipline"""
 
     # glm_estimator = StatsModelWrapper(family=sm.families.NegativeBinomial(alpha=1e-08)) # WE USED THIS FOR ONE STEP BUT IN THE END DIDNT DELIVER GOOD RESULTS
 
