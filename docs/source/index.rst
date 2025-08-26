@@ -1,20 +1,16 @@
-Welcome to DengAI's documentation!
-==================================
+# docs/source/index.rst
+
+Welcome to DengAI documentation!
+======================================
 
 .. toctree::
-   :maxdepth: 4
-   :caption: API Documentation:
+   :maxdepth: 2
+   :caption: Contents:
 
-   modules
+   # Other pages like usage.rst or introduction.rst can go here
 
-.. automodule:: main
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference:
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   api/modules
