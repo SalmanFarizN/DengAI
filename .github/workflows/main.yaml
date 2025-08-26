@@ -1,0 +1,87 @@
+# .github/workflows/main.yml
+
+name: Run Python Tests and Deploy Docs
+
+# Run tests only on PRs and main branch pushes
+on:
+  push:
+    branches: [main] # Only run on pushes to main
+  pull_request:
+    branches: [main] # Run on PRs targeting main
+
+# Add permissions for the workflow
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  lint:
+    name: Format and Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Run Black
+        run: black --check --diff .
+
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run tests
+        run: python -m unittest discover
+
+  # Documentation jobs only run on main branch
+  deploy-docs:
+    name: Deploy Documentation
+    # Only run on main branch AND after tests pass
+    if: github.ref == 'refs/heads/main'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install documentation dependencies
+        run: pip install -r docs/requirements.txt
+      - name: Build Sphinx documentation
+        run: sphinx-build -b html docs/source docs/build
+      - name: Upload documentation artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build/
+  # Deploy job only runs on main branch
+  deploy:
+    name: Deploy to GitHub Pages
+    # Only run on main branch AND after docs are built
+    if: github.ref == 'refs/heads/main'
+    needs: deploy-docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

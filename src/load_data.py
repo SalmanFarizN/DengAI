@@ -30,17 +30,16 @@ class LoadData:
         df = pd.read_csv(self.data_path)
 
         # copy index columns so we can use them later by column name
-        df['city_col'] = df['city']
-        df['year_col'] = df['year']
-        df['weekofyear_col'] = df['weekofyear']
-        df.set_index(['city', 'year', 'weekofyear'], inplace=True)
+        df["city_col"] = df["city"]
+        df["year_col"] = df["year"]
+        df["weekofyear_col"] = df["weekofyear"]
+        df.set_index(["city", "year", "weekofyear"], inplace=True)
 
         if self.labels_path is not None:
             # NOTE: LABELS contains total cases AND output columns needed for final csv
             df_labels = pd.read_csv(self.labels_path)
-            df_labels.set_index(['city', 'year', 'weekofyear'], inplace=True)
+            df_labels.set_index(["city", "year", "weekofyear"], inplace=True)
             df = df.join(df_labels)
-
 
         # Separate San Juan and Iquitos dataframes
 

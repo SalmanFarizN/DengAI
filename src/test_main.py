@@ -3,9 +3,10 @@ import glob
 import pandas as pd
 from main import main
 
+
 def test_csv_output():
     """Test that main() creates a CSV with the correct headers."""
-    expected_columns = ['city', 'year', 'weekofyear', 'total_cases']
+    expected_columns = ["city", "year", "weekofyear", "total_cases"]
 
     # Clean up any existing prediction files before test
     existing_files = glob.glob("data/predictions/predictions_*.csv")
@@ -25,7 +26,9 @@ def test_csv_output():
     # Verify file exists and has correct columns
     assert os.path.exists(output_path), f"CSV file {output_path} was not created"
     df = pd.read_csv(output_path)
-    assert list(df.columns) == expected_columns, f"Expected columns {expected_columns}, got {list(df.columns)}"
+    assert (
+        list(df.columns) == expected_columns
+    ), f"Expected columns {expected_columns}, got {list(df.columns)}"
 
     # Optional: Clean up after test
     os.remove(output_path)
