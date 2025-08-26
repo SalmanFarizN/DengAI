@@ -2,15 +2,53 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
-    """Select specific features from a pandas DataFrame.
-    This class implements the scikit-learn BaseEstimator and TransformerMixin interfaces.
-    It can be used in a scikit-learn pipeline for feature selection.
+    """Feature selection transformer for dengue fever prediction models.
+
+    This transformer selects a curated set of meteorological and environmental features
+    that have been identified as relevant for dengue fever case prediction. The feature
+    set includes current values, lagged features, and engineered temporal features.
+
+    The default feature set includes:
+    - Core meteorological features (temperature, humidity, precipitation)
+    - Lagged versions of key features (1-4 week lags)
+    - Engineered temporal features (cosine/sine transformations of week-of-year)
+    - Vegetation index features (NDVI)
+
+    Attributes
+    ----------
+    features : list of str
+        List of feature column names to select from the input DataFrame.
+
+    Examples
+    --------
+    >>> selector = FeatureSelector()  # Uses default features
+    >>> selected_data = selector.transform(augmented_data)
+    >>>
+    >>> # Custom feature selection
+    >>> custom_features = ['temp_feature', 'humidity_feature']
+    >>> selector = FeatureSelector(features=custom_features)
     """
 
     def __init__(self, features=None):
-        """
-        Args:
-            features (list): List of column names to select. If None, will use default features.
+        """Initialize the feature selector.
+
+        Parameters
+        ----------
+        features : list of str, optional
+            List of feature column names to select. If None, uses a default
+            set of features optimized for dengue fever prediction including:
+            - Primary meteorological features
+            - 1-4 week lagged features for temporal patterns
+            - Engineered temporal features (cosine/sine week transformations)
+            - Vegetation indices
+            Default is None.
+
+        Notes
+        -----
+        The default feature set represents the result of feature engineering
+        experiments and domain knowledge about dengue fever transmission patterns.
+        Lagged features capture the temporal delay between environmental conditions
+        and disease manifestation.
         """
         if features is None:
 
@@ -93,15 +131,60 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         self.features = features
 
     def fit(self, X=None, y=None):
-        # No fitting necessary, so we return self
+        """Fit the feature selector.
+
+        This is a stateless transformer, so no actual fitting is performed.
+        This method is required by the scikit-learn transformer interface.
+
+        Parameters
+        ----------
+        X : pd.DataFrame, optional
+            Input features. Not used in this stateless transformer.
+        y : array-like, optional
+            Target values. Not used in this transformer.
+
+        Returns
+        -------
+        self : FeatureSelector
+            Returns self for method chaining compatibility.
+        """
         return self
 
     def transform(self, dataframe):
-        """Select specified features from the dataframe.
-        Args:
-            dataframe (pd.DataFrame): Input dataframe.
-        Returns:
-            pd.DataFrame: Dataframe with only selected features.
+        """Select specified features from the input DataFrame.
+
+        This method extracts the predefined set of features from the input DataFrame,
+        providing feature selection for downstream modeling. The method includes
+        diagnostic printing to track feature availability and selection.
+
+        Parameters
+        ----------
+        dataframe : pd.DataFrame
+            Input DataFrame containing augmented features from previous pipeline steps.
+            Expected to contain all features specified in self.features.
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing only the selected features, maintaining the same
+            index as the input DataFrame. Shape: (n_samples, n_selected_features)
+
+        Raises
+        ------
+        KeyError
+            If any of the specified features are not found in the input DataFrame.
+
+        Notes
+        -----
+        - Prints diagnostic information about available and selected features
+        - Creates a copy of the selected data to avoid modifying the original
+        - The selected features are typically the result of prior feature engineering
+
+        Examples
+        --------
+        >>> selector = FeatureSelector()
+        >>> selected_features = selector.transform(engineered_data)
+        >>> print(f"Selected {selected_features.shape[1]} features from {dataframe.shape[1]}")
         """
         # Print the name of columns
         print(f"Columns in the dataframe: {dataframe.columns.tolist()}")
