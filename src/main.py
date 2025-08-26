@@ -105,9 +105,9 @@ def main():
 
     File Dependencies
     -----------------
-    - ``data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Features.csv``
-    - ``data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Labels.csv``
-    - ``data/raw/DengAI_Predicting_Disease_Spread_-_Test_Data_Features.csv``
+    - data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Features.csv
+    - data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Labels.csv
+    - data/raw/DengAI_Predicting_Disease_Spread_-_Test_Data_Features.csv
 
     Examples
     --------
