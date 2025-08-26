@@ -8,27 +8,27 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../'))
 
-project = 'DengAI'
-copyright = '2025, Grant Thomas & Salman Fariz Navas'
-author = 'Grant Thomas & Salman Fariz Navas'
-release = '0.0.1'
+sys.path.insert(0, os.path.abspath("../../"))
+
+project = "DengAI"
+copyright = "2025, Grant Thomas & Salman Fariz Navas"
+author = "Grant Thomas & Salman Fariz Navas"
+release = "0.0.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.autodoc', #<-- 2. ADD THIS
+    "sphinx.ext.autodoc",  # <-- 2. ADD THIS
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
-
 
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
