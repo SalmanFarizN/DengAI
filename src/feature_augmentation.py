@@ -1,6 +1,6 @@
-from pandas.conftest import datapath
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
+import pandas as pd
 
 
 class FeatureAugmentation(BaseEstimator, TransformerMixin):
