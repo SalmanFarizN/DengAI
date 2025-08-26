@@ -9,7 +9,9 @@
 import os
 import sys
 
+# Add both project root and src directory to Python path
 sys.path.insert(0, os.path.abspath("../../"))  # Point to your project root
+sys.path.insert(0, os.path.abspath("../../src"))  # Point to src directory
 
 project = "DengAI"
 copyright = "2025, Your Name"

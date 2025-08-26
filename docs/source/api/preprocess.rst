@@ -1,7 +1,7 @@
 preprocess module
 =================
 
-.. automodule:: preprocess
+.. automodule:: src.preprocess
    :members:
    :show-inheritance:
    :undoc-members:

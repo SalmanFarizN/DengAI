@@ -1,7 +1,7 @@
 main module
 ===========
 
-.. automodule:: main
+.. automodule:: src.main
    :members:
    :show-inheritance:
    :undoc-members:

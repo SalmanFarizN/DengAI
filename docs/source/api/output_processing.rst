@@ -1,7 +1,7 @@
 output\_processing module
 =========================
 
-.. automodule:: output_processing
+.. automodule:: src.output_processing
    :members:
    :show-inheritance:
    :undoc-members:
