@@ -8,20 +8,21 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../'))  # Point to your project root
 
-project = 'DengAI'
-copyright = '2025, Your Name'
-author = 'Your Name'
+sys.path.insert(0, os.path.abspath("../../"))  # Point to your project root
+
+project = "DengAI"
+copyright = "2025, Your Name"
+author = "Your Name"
 
 extensions = [
-    'sphinx.ext.autodoc',      # Auto-generate from docstrings
-    'sphinx.ext.viewcode',     # Add source code links
-    'sphinx.ext.napoleon',     # Support for Google/NumPy docstring styles
+    "sphinx.ext.autodoc",  # Auto-generate from docstrings
+    "sphinx.ext.viewcode",  # Add source code links
+    "sphinx.ext.napoleon",  # Support for Google/NumPy docstring styles
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
