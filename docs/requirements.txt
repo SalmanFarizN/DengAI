@@ -1,2 +1,7 @@
 sphinx
 sphinx_rtd_theme
+pandas
+numpy
+scikit-learn
+xgboost
+statsmodels
