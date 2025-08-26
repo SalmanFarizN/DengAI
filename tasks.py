@@ -8,9 +8,11 @@ def concat_csv(file1_path, file2_path, output_dir):
     output_filename = f"combined_{timestamp}.csv"
     output_path = os.path.join(output_dir, output_filename)
 
-    with open(file1_path, newline='', encoding='utf-8') as f1, \
-         open(file2_path, newline='', encoding='utf-8') as f2, \
-         open(output_path, 'w', newline='', encoding='utf-8') as fout:
+    with (
+        open(file1_path, newline="", encoding="utf-8") as f1,
+        open(file2_path, newline="", encoding="utf-8") as f2,
+        open(output_path, "w", newline="", encoding="utf-8") as fout,
+    ):
 
         reader1 = csv.reader(f1)
         reader2 = csv.reader(f2)
@@ -27,5 +29,6 @@ def concat_csv(file1_path, file2_path, output_dir):
             writer.writerow(row)
 
     print(f"Files concatenated and saved to: {output_path}")
+
 
 # concat_csv('src/predictions1.csv', 'src/predictions.csv', "./")

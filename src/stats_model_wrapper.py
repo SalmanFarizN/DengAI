@@ -1,6 +1,7 @@
 from sklearn.base import BaseEstimator, RegressorMixin
 import statsmodels.formula.api as smf
 
+
 class StatsModelWrapper(BaseEstimator, RegressorMixin):
     def __init__(self, family):
         self.family = family
@@ -11,8 +12,8 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
         # X is a pandas DataFrame, y is optional (can be in X as 'total_cases')
         data = X.copy()
 
-        if y is not None and 'total_cases' not in data.columns:
-            data['total_cases'] = y
+        if y is not None and "total_cases" not in data.columns:
+            data["total_cases"] = y
 
         model_formula = (
             "total_cases ~ 1 + "
@@ -24,11 +25,7 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
             "reanalysis_avg_temp_k_shift_3"
         )
 
-        self.model_ = smf.glm(
-            formula=model_formula,
-            data=data,
-            family=self.family
-        )
+        self.model_ = smf.glm(formula=model_formula, data=data, family=self.family)
         self.result_ = self.model_.fit()
         return self
 

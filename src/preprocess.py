@@ -1,6 +1,8 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
+
+
 class Preprocess(BaseEstimator, TransformerMixin):
     """Preprocess data by cleaning. Inputs are a pandas DataFrame.
     This class implements the scikit-learn BaseEstimator and TransformerMixin interfaces.
@@ -23,6 +25,7 @@ class Preprocess(BaseEstimator, TransformerMixin):
         """
 
         # Fill missing values
-        X = dataframe.bfill() # Backfill used here for Nans in raw data but also deals with lagged data's missing values.
+        X = (
+            dataframe.bfill()
+        )  # Backfill used here for Nans in raw data but also deals with lagged data's missing values.
         return X
-

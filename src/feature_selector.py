@@ -1,4 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
+
+
 class FeatureSelector(BaseEstimator, TransformerMixin):
     """Select specific features from a pandas DataFrame.
     This class implements the scikit-learn BaseEstimator and TransformerMixin interfaces.
@@ -12,98 +14,81 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         """
         if features is None:
 
-                features = [
-                    # Main Feature Set
-                    "reanalysis_specific_humidity_g_per_kg",
-                    "reanalysis_dew_point_temp_k",
-                    "reanalysis_min_air_temp_k",
-                    "station_min_temp_c",
-                    "reanalysis_relative_humidity_percent",
-                    "station_avg_temp_c",
-                    "reanalysis_precip_amt_kg_per_m2",
-                    "reanalysis_air_temp_k",
-                    "reanalysis_sat_precip_amt_mm",
-                    "reanalysis_avg_temp_k",
-                    "station_max_temp_c",
-                    "station_precip_mm",
-                    "ndvi_sw",
-                    "weekofyear_col",
-
-                    # Below we Lag all our main features to deal with delayed total cases and there effect on weather.
-                    "reanalysis_specific_humidity_g_per_kg_lag1",
-                    "reanalysis_specific_humidity_g_per_kg_lag2",
-                    "reanalysis_specific_humidity_g_per_kg_lag3",
-                    "reanalysis_specific_humidity_g_per_kg_lag4",
-
-                    "reanalysis_dew_point_temp_k_lag1",
-                    "reanalysis_dew_point_temp_k_lag2",
-                    "reanalysis_dew_point_temp_k_lag3",
-                    "reanalysis_dew_point_temp_k_lag4",
-
-                    "reanalysis_min_air_temp_k_lag1",
-                    "reanalysis_min_air_temp_k_lag2",
-                    "reanalysis_min_air_temp_k_lag3",
-                    "reanalysis_min_air_temp_k_lag4",
-
-                    "station_min_temp_c_lag1",
-                    "station_min_temp_c_lag2",
-                    "station_min_temp_c_lag3",
-                    "station_min_temp_c_lag4",
-
-                    "reanalysis_relative_humidity_percent_lag1",
-                    "reanalysis_relative_humidity_percent_lag2",
-                    "reanalysis_relative_humidity_percent_lag3",
-                    "reanalysis_relative_humidity_percent_lag4",
-
-                    "station_avg_temp_c_lag1",
-                    "station_avg_temp_c_lag2",
-                    "station_avg_temp_c_lag3",
-                    "station_avg_temp_c_lag4",
-
-                    "reanalysis_precip_amt_kg_per_m2_lag1",
-                    "reanalysis_precip_amt_kg_per_m2_lag2",
-                    "reanalysis_precip_amt_kg_per_m2_lag3",
-                    "reanalysis_precip_amt_kg_per_m2_lag4",
-
-                    "reanalysis_air_temp_k_lag1",
-                    "reanalysis_air_temp_k_lag2",
-                    "reanalysis_air_temp_k_lag3",
-                    "reanalysis_air_temp_k_lag4",
-
-                    "reanalysis_sat_precip_amt_mm_lag1",
-                    "reanalysis_sat_precip_amt_mm_lag2",
-                    "reanalysis_sat_precip_amt_mm_lag3",
-                    "reanalysis_sat_precip_amt_mm_lag4",
-
-                    "reanalysis_avg_temp_k_lag1",
-                    "reanalysis_avg_temp_k_lag2",
-                    "reanalysis_avg_temp_k_lag3",
-                    "reanalysis_avg_temp_k_lag4",
-
-                    "station_max_temp_c_lag1",
-                    "station_max_temp_c_lag2",
-                    "station_max_temp_c_lag3",
-                    "station_max_temp_c_lag4",
-
-                    "station_precip_mm_lag1",
-                    "station_precip_mm_lag2",
-                    "station_precip_mm_lag3",
-                    "station_precip_mm_lag4",
-
-                    "ndvi_sw_lag1",
-                    "ndvi_sw_lag2",
-                    "ndvi_sw_lag3",
-                    "ndvi_sw_lag4",
-
-                    # Here we use cosine and sine of weekofyear against year to better adjust for seasonal changes.
-                    "weekofyear_col_cosine",
-                    "weekofyear_col_sine",
-
-                    # "station_avg_temp_c_temp_composite",
-
-                    # "reanalysis_air_temp_k_saturation_composite"
-                ]
-
+            features = [
+                # Main Feature Set
+                "reanalysis_specific_humidity_g_per_kg",
+                "reanalysis_dew_point_temp_k",
+                "reanalysis_min_air_temp_k",
+                "station_min_temp_c",
+                "reanalysis_relative_humidity_percent",
+                "station_avg_temp_c",
+                "reanalysis_precip_amt_kg_per_m2",
+                "reanalysis_air_temp_k",
+                "reanalysis_sat_precip_amt_mm",
+                "reanalysis_avg_temp_k",
+                "station_max_temp_c",
+                "station_precip_mm",
+                "ndvi_sw",
+                "weekofyear_col",
+                # Below we Lag all our main features to deal with delayed total cases and there effect on weather.
+                "reanalysis_specific_humidity_g_per_kg_lag1",
+                "reanalysis_specific_humidity_g_per_kg_lag2",
+                "reanalysis_specific_humidity_g_per_kg_lag3",
+                "reanalysis_specific_humidity_g_per_kg_lag4",
+                "reanalysis_dew_point_temp_k_lag1",
+                "reanalysis_dew_point_temp_k_lag2",
+                "reanalysis_dew_point_temp_k_lag3",
+                "reanalysis_dew_point_temp_k_lag4",
+                "reanalysis_min_air_temp_k_lag1",
+                "reanalysis_min_air_temp_k_lag2",
+                "reanalysis_min_air_temp_k_lag3",
+                "reanalysis_min_air_temp_k_lag4",
+                "station_min_temp_c_lag1",
+                "station_min_temp_c_lag2",
+                "station_min_temp_c_lag3",
+                "station_min_temp_c_lag4",
+                "reanalysis_relative_humidity_percent_lag1",
+                "reanalysis_relative_humidity_percent_lag2",
+                "reanalysis_relative_humidity_percent_lag3",
+                "reanalysis_relative_humidity_percent_lag4",
+                "station_avg_temp_c_lag1",
+                "station_avg_temp_c_lag2",
+                "station_avg_temp_c_lag3",
+                "station_avg_temp_c_lag4",
+                "reanalysis_precip_amt_kg_per_m2_lag1",
+                "reanalysis_precip_amt_kg_per_m2_lag2",
+                "reanalysis_precip_amt_kg_per_m2_lag3",
+                "reanalysis_precip_amt_kg_per_m2_lag4",
+                "reanalysis_air_temp_k_lag1",
+                "reanalysis_air_temp_k_lag2",
+                "reanalysis_air_temp_k_lag3",
+                "reanalysis_air_temp_k_lag4",
+                "reanalysis_sat_precip_amt_mm_lag1",
+                "reanalysis_sat_precip_amt_mm_lag2",
+                "reanalysis_sat_precip_amt_mm_lag3",
+                "reanalysis_sat_precip_amt_mm_lag4",
+                "reanalysis_avg_temp_k_lag1",
+                "reanalysis_avg_temp_k_lag2",
+                "reanalysis_avg_temp_k_lag3",
+                "reanalysis_avg_temp_k_lag4",
+                "station_max_temp_c_lag1",
+                "station_max_temp_c_lag2",
+                "station_max_temp_c_lag3",
+                "station_max_temp_c_lag4",
+                "station_precip_mm_lag1",
+                "station_precip_mm_lag2",
+                "station_precip_mm_lag3",
+                "station_precip_mm_lag4",
+                "ndvi_sw_lag1",
+                "ndvi_sw_lag2",
+                "ndvi_sw_lag3",
+                "ndvi_sw_lag4",
+                # Here we use cosine and sine of weekofyear against year to better adjust for seasonal changes.
+                "weekofyear_col_cosine",
+                "weekofyear_col_sine",
+                # "station_avg_temp_c_temp_composite",
+                # "reanalysis_air_temp_k_saturation_composite"
+            ]
 
         self.features = features
 
