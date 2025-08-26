@@ -16,37 +16,37 @@ from datetime import datetime
 
 def create_pipeline():
     """Create a complete machine learning pipeline for dengue fever prediction.
-    
+
     This function constructs a 4-step scikit-learn pipeline optimized for
     dengue fever case count prediction using time series epidemiological data.
     The pipeline includes feature engineering, preprocessing, feature selection,
     and a gradient boosting model.
-    
+
     Pipeline Steps:
     1. Feature Augmentation: Creates lagged features and seasonal transformations
     2. Preprocessing: Handles missing values using backward fill
     3. Feature Selection: Selects curated set of predictive features
     4. Model: XGBoost Regressor for final predictions
-    
+
     Returns
     -------
     sklearn.pipeline.Pipeline
         A fitted pipeline ready for training on dengue fever data.
         Pipeline steps are named: 'featureaugmentation', 'preprocessing',
         'featureengineering', 'model'.
-        
+
     Notes
     -----
     - Originally experimented with GLM/Negative Binomial but XGBoost performed better
     - Pipeline is designed to handle both San Juan and Iquitos data separately
     - Each city should have its own pipeline instance for optimal performance
-    
+
     Examples
     --------
     >>> pipeline = create_pipeline()
     >>> pipeline.fit(X_train, y_train)
     >>> predictions = pipeline.predict(X_test)
-    
+
     See Also
     --------
     main : Function that uses this pipeline for full training and prediction workflow
@@ -66,35 +66,35 @@ def create_pipeline():
 
 def main():
     """Execute the complete dengue fever prediction workflow.
-    
+
     This function implements the full machine learning pipeline for the DengAI
     competition, including data loading, model training for both cities,
     prediction generation, and output formatting. The workflow is designed
     to handle the dual-city nature of the competition where San Juan and
     Iquitos require separate models due to different environmental conditions.
-    
+
     Workflow Steps:
     1. Load training data (features + labels) for both cities
-    2. Load test data (features only) for both cities  
+    2. Load test data (features only) for both cities
     3. Create separate pipelines for each city
     4. Train models on city-specific training data
     5. Generate predictions for test data
     6. Post-process predictions (ensure non-negative integers)
     7. Format and save predictions to timestamped CSV file
-    
+
     Returns
     -------
     pd.DataFrame
         DataFrame containing San Juan predictions with columns:
         ['city', 'year', 'weekofyear', 'total_cases']
-        
+
     Raises
     ------
     NotImplementedError
         If data loading fails or pipeline components are not properly implemented.
     FileNotFoundError
         If required data files are not found in expected locations.
-        
+
     Notes
     -----
     - Expects data files in 'data/raw/' directory with specific naming conventions
@@ -102,18 +102,18 @@ def main():
     - Predictions are saved to 'data/predictions/' with timestamp
     - Uses XGBoost regressor as final model after feature engineering
     - Post-processing ensures predictions are non-negative integers
-    
+
     File Dependencies
     -----------------
     - data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Features.csv
-    - data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Labels.csv  
+    - data/raw/DengAI_Predicting_Disease_Spread_-_Training_Data_Labels.csv
     - data/raw/DengAI_Predicting_Disease_Spread_-_Test_Data_Features.csv
-    
+
     Examples
     --------
     >>> result = main()
     >>> print(f"Generated predictions for {len(result)} San Juan test samples")
-    
+
     See Also
     --------
     create_pipeline : Creates the ML pipeline used in this function
@@ -181,7 +181,7 @@ def main():
 
 if __name__ == "__main__":
     """Main execution block for dengue fever prediction script.
-    
+
     Executes the main prediction workflow with error handling for
     common setup and implementation issues.
     """

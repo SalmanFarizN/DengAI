@@ -4,15 +4,15 @@ from datetime import datetime
 
 class OutputCSV:
     """CSV output handler for dengue fever prediction results.
-    
+
     This class manages the formatting and export of prediction results to CSV format
     for submission to the DengAI competition or further analysis. It handles the
     concatenation of predictions from multiple cities and ensures proper formatting
     according to competition requirements.
-    
+
     The class automatically generates timestamped output files and handles the
     proper structure expected for dengue fever case predictions.
-    
+
     Attributes
     ----------
     pd1 : pd.DataFrame
@@ -23,7 +23,7 @@ class OutputCSV:
         Timestamp of when the instance was created
     output_file_path : str
         Generated file path for the output CSV file
-        
+
     Examples
     --------
     >>> sj_predictions = pd.DataFrame({'city': ['sj'], 'total_cases': [10]})
@@ -31,18 +31,19 @@ class OutputCSV:
     >>> output_handler = OutputCSV(sj_predictions, iq_predictions)
     >>> file_path = output_handler.save()
     """
+
     def __init__(self, pd1: pd.DataFrame, pd2: pd.DataFrame):
         """Initialize the CSV output handler with prediction DataFrames.
-        
+
         Parameters
         ----------
         pd1 : pd.DataFrame
             Predictions DataFrame for the first city. Expected to contain columns:
             ['city', 'year', 'weekofyear', 'total_cases']
-        pd2 : pd.DataFrame  
+        pd2 : pd.DataFrame
             Predictions DataFrame for the second city. Expected to contain columns:
             ['city', 'year', 'weekofyear', 'total_cases']
-            
+
         Notes
         -----
         - Automatically generates a timestamped output file path
@@ -56,23 +57,23 @@ class OutputCSV:
 
     def save(self):
         """Save the combined predictions to a CSV file.
-        
+
         This method concatenates predictions from both cities, ensuring proper
         formatting for submission or analysis. The output follows the standard
         DengAI competition format with required columns and structure.
-        
+
         Returns
         -------
         str
             Path to the saved CSV file
-            
+
         Notes
         -----
         - Combines predictions from both cities using pd.concat with ignore_index=True
         - Saves with headers included for readability
         - Creates timestamped files to avoid overwriting previous predictions
         - Output directory structure: 'data/predictions/'
-        
+
         Examples
         --------
         >>> output_handler = OutputCSV(sj_pred, iq_pred)

@@ -5,28 +5,28 @@ import numpy as np
 
 class FeatureAugmentation(BaseEstimator, TransformerMixin):
     """Feature engineering transformer for time series epidemiological data.
-    
+
     This transformer creates derived features through various augmentation techniques
     including temporal lagging, trigonometric transformations for seasonality,
     and composite feature engineering. It is specifically designed for dengue fever
     prediction where temporal patterns and seasonal effects are critical.
-    
+
     The transformer supports multiple augmentation types:
     - Temporal lagging: Create lagged versions of features (1-4 weeks)
     - Trigonometric features: Cosine/sine transformations for seasonal patterns
     - Composite features: Domain-specific feature combinations
-    
+
     Attributes
     ----------
     augmentations : list of dict
         Configuration for feature augmentations. Each dictionary specifies
         the augmentation type, target column, and parameters.
-        
+
     Examples
     --------
     >>> augmenter = FeatureAugmentation()  # Uses default configuration
     >>> augmented_data = augmenter.transform(raw_data)
-    >>> 
+    >>>
     >>> # Custom augmentation configuration
     >>> custom_config = [{'type': 'shift', 'column': 'temperature', 'shift_periods': [1, 2]}]
     >>> augmenter = FeatureAugmentation(augmentations=custom_config)
@@ -34,12 +34,12 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
     def __init__(self, augmentations=None):
         """Initialize the feature augmentation transformer.
-        
+
         Parameters
         ----------
         augmentations : list of dict, optional
             Configuration for feature augmentations. Each dictionary should contain:
-            
+
             - 'type' : str
                 Type of augmentation. Supported values:
                 - 'shift': Create lagged versions of features
@@ -48,16 +48,16 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
                 - 'sine': Create sine transformation for seasonality
                 - 'temp_composite': Temperature-based composite features
                 - 'saturation_composite': Saturation deficit composite features
-                
+
             - 'column' : str
                 Name of the source column to augment
-                
+
             - 'shift_periods' : int or list of int
                 Number of periods to shift (for shift-based augmentations)
-                
+
             If None, uses a comprehensive default configuration optimized for
             dengue fever prediction. Default is None.
-            
+
         Notes
         -----
         The default configuration includes lagged features for all major
@@ -139,17 +139,17 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
     def fit(self, X=None, y=None):
         """Fit the feature augmentation transformer.
-        
+
         This is a stateless transformer, so no actual fitting is performed.
         This method is required by the scikit-learn transformer interface.
-        
+
         Parameters
         ----------
         X : pd.DataFrame, optional
             Input features. Not used in this stateless transformer.
         y : array-like, optional
             Target values. Not used in this transformer.
-            
+
         Returns
         -------
         self : FeatureAugmentation
@@ -159,17 +159,17 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
     def transform(self, dataframe):
         """Apply feature augmentation to create derived temporal and seasonal features.
-        
+
         This method processes the input DataFrame according to the configured
         augmentation specifications, creating lagged features, seasonal transformations,
         and composite features that capture temporal patterns relevant to disease spread.
-        
+
         Parameters
         ----------
         dataframe : pd.DataFrame
             Input DataFrame with base features. Expected to have temporal structure
             with features like meteorological variables and temporal indices.
-            
+
         Returns
         -------
         pd.DataFrame
@@ -178,14 +178,14 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
             - '{feature}_lag{n}' for lagged features
             - '{feature}_cosine' for cosine seasonal transformations
             - '{feature}_sine' for sine seasonal transformations
-            
+
         Notes
         -----
         - Each augmentation is applied sequentially
         - Missing columns in augmentation config will generate warnings
         - The method includes progress reporting for feature creation
         - Lagged features may introduce NaN values at time series boundaries
-        
+
         Examples
         --------
         >>> augmenter = FeatureAugmentation()
@@ -204,10 +204,10 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
     def _apply_augmentation(self, dataframe, config):
         """Apply a single augmentation transformation based on configuration.
-        
+
         This private method handles the application of individual augmentation
         operations as specified in the configuration dictionary.
-        
+
         Parameters
         ----------
         dataframe : pd.DataFrame
@@ -215,12 +215,12 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
         config : dict
             Augmentation configuration dictionary containing 'type', 'column',
             and type-specific parameters
-            
+
         Returns
         -------
         pd.DataFrame
             DataFrame with the specified augmentation applied
-            
+
         Notes
         -----
         - Handles different augmentation types through conditional logic
@@ -291,11 +291,11 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
 
     def create_shift(self, dataframe, shift_value, column):
         """Create a lagged version of a feature.
-        
+
         This method creates a time-shifted version of the specified column,
         which is essential for capturing temporal dependencies in time series
         epidemiological data.
-        
+
         Parameters
         ----------
         dataframe : pd.DataFrame
@@ -304,19 +304,19 @@ class FeatureAugmentation(BaseEstimator, TransformerMixin):
             Number of periods to shift. Positive values create lags.
         column : str
             Name of the column to lag
-            
+
         Returns
         -------
         str
             Name of the created lagged feature
-            
+
         Notes
         -----
         - Modifies dataframe in-place
         - Lagged features help capture the delay between environmental
           conditions and disease manifestation
         - Uses pandas shift() which handles time series index alignment
-        
+
         Examples
         --------
         >>> feature_name = augmenter.create_shift(df, 2, 'temperature')

@@ -4,38 +4,39 @@ import statsmodels.formula.api as smf
 
 class StatsModelWrapper(BaseEstimator, RegressorMixin):
     """Scikit-learn compatible wrapper for statsmodels GLM regression.
-    
+
     This wrapper enables the use of statsmodels Generalized Linear Models (GLM)
     within scikit-learn pipelines. It's specifically designed for count data
     regression in epidemiological contexts, such as predicting dengue fever cases
     using negative binomial or Poisson family distributions.
-    
+
     The wrapper handles the interface differences between statsmodels and
     scikit-learn, making it possible to use statistical models that may be
     more appropriate for count data than standard machine learning regressors.
-    
+
     Attributes
     ----------
     family : statsmodels.genmod.families.family.Family
         Statistical family for the GLM (e.g., NegativeBinomial, Poisson)
     model_ : statsmodels.genmod.generalized_linear_model.GLM
         Fitted statsmodels GLM instance
-    result_ : statsmodels.genmod.generalized_linear_model.GLMResults  
+    result_ : statsmodels.genmod.generalized_linear_model.GLMResults
         Fitted model results from statsmodels
-        
+
     Examples
     --------
     >>> import statsmodels.api as sm
     >>> from sklearn.pipeline import Pipeline
-    >>> 
+    >>>
     >>> # Create wrapper with negative binomial family for count data
     >>> nb_model = StatsModelWrapper(family=sm.families.NegativeBinomial())
     >>> pipeline = Pipeline([('model', nb_model)])
     >>> pipeline.fit(X_train, y_train)
     """
+
     def __init__(self, family):
         """Initialize the statsmodels GLM wrapper.
-        
+
         Parameters
         ----------
         family : statsmodels.genmod.families.family.Family
@@ -44,7 +45,7 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
             - sm.families.NegativeBinomial() for overdispersed count data
             - sm.families.Poisson() for standard count data
             - sm.families.Gaussian() for continuous data
-            
+
         Examples
         --------
         >>> import statsmodels.api as sm
@@ -57,12 +58,12 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
 
     def fit(self, X, y=None):
         """Fit the GLM model to training data.
-        
+
         This method prepares the data for statsmodels, constructs the model
         formula, and fits the GLM. It's designed to work with dengue fever
         prediction features and handles the specific feature set used in the
         DengAI competition.
-        
+
         Parameters
         ----------
         X : pd.DataFrame
@@ -71,18 +72,18 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
         y : array-like, optional
             Target values (dengue case counts). If None, expects 'total_cases'
             column to be present in X. Default is None.
-            
+
         Returns
         -------
         self : StatsModelWrapper
             Returns self for method chaining compatibility.
-            
+
         Notes
         -----
         - Uses a hardcoded formula optimized for dengue fever prediction
         - Formula includes lagged meteorological features and seasonal terms
         - The model is fitted using statsmodels GLM with the specified family
-        
+
         Raises
         ------
         KeyError
@@ -114,24 +115,24 @@ class StatsModelWrapper(BaseEstimator, RegressorMixin):
 
     def predict(self, X):
         """Generate predictions using the fitted GLM model.
-        
+
         Parameters
         ----------
         X : pd.DataFrame
             Feature matrix for prediction. Must contain the same features
             used during training as specified in the model formula.
-            
+
         Returns
         -------
         np.ndarray
             Predicted values (dengue case counts) as a numpy array.
-            
+
         Notes
         -----
         - Uses the fitted statsmodels GLM result for prediction
         - Predictions are generated using the same formula as training
         - Returns raw predictions without post-processing
-        
+
         Examples
         --------
         >>> predictions = fitted_wrapper.predict(X_test)

@@ -3,27 +3,27 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 class FeatureSelector(BaseEstimator, TransformerMixin):
     """Feature selection transformer for dengue fever prediction models.
-    
+
     This transformer selects a curated set of meteorological and environmental features
     that have been identified as relevant for dengue fever case prediction. The feature
     set includes current values, lagged features, and engineered temporal features.
-    
+
     The default feature set includes:
     - Core meteorological features (temperature, humidity, precipitation)
     - Lagged versions of key features (1-4 week lags)
     - Engineered temporal features (cosine/sine transformations of week-of-year)
     - Vegetation index features (NDVI)
-    
+
     Attributes
     ----------
     features : list of str
         List of feature column names to select from the input DataFrame.
-        
+
     Examples
     --------
     >>> selector = FeatureSelector()  # Uses default features
     >>> selected_data = selector.transform(augmented_data)
-    >>> 
+    >>>
     >>> # Custom feature selection
     >>> custom_features = ['temp_feature', 'humidity_feature']
     >>> selector = FeatureSelector(features=custom_features)
@@ -31,7 +31,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def __init__(self, features=None):
         """Initialize the feature selector.
-        
+
         Parameters
         ----------
         features : list of str, optional
@@ -42,7 +42,7 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
             - Engineered temporal features (cosine/sine week transformations)
             - Vegetation indices
             Default is None.
-            
+
         Notes
         -----
         The default feature set represents the result of feature engineering
@@ -132,17 +132,17 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def fit(self, X=None, y=None):
         """Fit the feature selector.
-        
+
         This is a stateless transformer, so no actual fitting is performed.
         This method is required by the scikit-learn transformer interface.
-        
+
         Parameters
         ----------
         X : pd.DataFrame, optional
             Input features. Not used in this stateless transformer.
         y : array-like, optional
             Target values. Not used in this transformer.
-            
+
         Returns
         -------
         self : FeatureSelector
@@ -152,34 +152,34 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
 
     def transform(self, dataframe):
         """Select specified features from the input DataFrame.
-        
+
         This method extracts the predefined set of features from the input DataFrame,
         providing feature selection for downstream modeling. The method includes
         diagnostic printing to track feature availability and selection.
-        
+
         Parameters
         ----------
         dataframe : pd.DataFrame
             Input DataFrame containing augmented features from previous pipeline steps.
             Expected to contain all features specified in self.features.
-            
+
         Returns
         -------
         pd.DataFrame
             DataFrame containing only the selected features, maintaining the same
             index as the input DataFrame. Shape: (n_samples, n_selected_features)
-            
+
         Raises
         ------
         KeyError
             If any of the specified features are not found in the input DataFrame.
-            
+
         Notes
         -----
         - Prints diagnostic information about available and selected features
         - Creates a copy of the selected data to avoid modifying the original
         - The selected features are typically the result of prior feature engineering
-        
+
         Examples
         --------
         >>> selector = FeatureSelector()
