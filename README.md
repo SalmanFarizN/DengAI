@@ -53,7 +53,15 @@ uv venv
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 
 uv pip install -r requirements.txt
+
 ```
+
+## 🛠️ Code Quality & Documentation
+
+- **Black formatting**: All Python code is automatically formatted using Black for consistent code style
+- **Sphinx documentation**: API documentation is auto-generated from docstrings and deployed via GitHub Pages
+  see at `https://salmanfarizn.github.io/DengAI/`
+- Run `black .` locally before committing to ensure proper formatting
 
 ## 🏋️‍♂️ Train Model & Predict
 
