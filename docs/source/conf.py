@@ -14,8 +14,8 @@ sys.path.insert(0, os.path.abspath("../../"))  # Point to your project root
 sys.path.insert(0, os.path.abspath("../../src"))  # Point to src directory
 
 project = "DengAI"
-copyright = "2025, Your Name"
-author = "Your Name"
+copyright = "2025, Grant Thomas & Salman Fariz Navas"
+author = "Grant Thomas & Salman Fariz Navas"
 
 extensions = [
     "sphinx.ext.autodoc",  # Auto-generate from docstrings
