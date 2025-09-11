@@ -192,6 +192,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "pytest" },
+    { name = "python-call-graph" },
     { name = "scikit-learn" },
     { name = "sphinx" },
     { name = "sphinx-rtd-theme" },
@@ -207,6 +208,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.3.2" },
     { name = "pandas", specifier = ">=2.3.1" },
     { name = "pytest", specifier = ">=8.4.1" },
+    { name = "python-call-graph", specifier = ">=2.1.4" },
     { name = "scikit-learn", specifier = ">=1.7.1" },
     { name = "sphinx", specifier = ">=8.2.3" },
     { name = "sphinx-rtd-theme", specifier = ">=3.0.2" },
@@ -685,6 +687,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/08/ba/45911d754e8eba3d5
 wheels = [
     { url = "https://files.pythonhosted.org/packages/29/16/c8a903f4c4dffe7a12843191437d7cd8e32751d5de349d45d3fe69544e87/pytest-8.4.1-py3-none-any.whl", hash = "sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7", size = 365474, upload-time = "2025-06-18T05:48:03.955Z" },
 ]
+
+[[package]]
+name = "python-call-graph"
+version = "2.1.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b4/b6/de26edf42bf7b6d6c309c623abbc4f8b0b0a4ab7af8b70c75c79d0e5583e/python-call-graph-2.1.4.tar.gz", hash = "sha256:e97cbff31e0759d419fac9b42501625b075bdf43b7ff8209223c0034d27abbf1", size = 471270, upload-time = "2025-06-06T21:38:47.293Z" }
 
 [[package]]
 name = "python-dateutil"
